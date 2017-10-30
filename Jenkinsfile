@@ -14,7 +14,7 @@ pipeline{
                 checkout(
                     [
                         $class: 'GitSCM',
-                        branches: [[name: '*/dev']],
+                        branches: [[name: '*/master']],
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [],
                         submoduleCfg: [],
@@ -23,29 +23,30 @@ pipeline{
                 )
             }
         }
-        stage('Say "hello world"'){
+        stage('prepare noDup master csv'){
             steps{
-                powershell './hw_powershell.ps1'
-                powershell './helloWorld.ps1'
+              // 1. execute python script to create master csv file and remove duplicates
+              // 2. execute shell script to remove quotes around money field
             }
         }
-        stage('Process source files'){
+        stage('Build container'){
             steps{
-                echo "1. execute python script. Input: all source csv's. Output one noDupMasterCsvFile"
+              // 3. move nodup master to docker psql data dir to include it the build.
+              // 4. build container
             }
         }
 	    stage('Build database') {
 	        steps{
-	            echo 'Building...'
-	            echo "This are the database files: \n $DB_FILES_HOME"
-	            echo "build tables"
-	            echo "build views and others"
+	            // echo 'Building...'
+	            // echo "This are the database files: \n $DB_FILES_HOME"
+	            // echo "build tables"
+	            // echo "build views and others"
 	        }
 	    }
 	    stage('Provision database'){
 	        steps{
-	            echo 'Provisioning...'
-	            echo "Input is noDupMasterCsvFile"
+	            // echo 'Provisioning...'
+	            // echo "Input is noDupMasterCsvFile"
 	        }
 	    }
 	}

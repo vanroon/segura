@@ -55,10 +55,10 @@ CREATE TABLE public.tbl_transaction_category_code_mapping
 
 CREATE TABLE public."tbl_bizniz_rulez"
 (
-    id serial,
+    --id serial,
     categorycode            character varying(10) NOT NULL,
     categorycodedescription character varying(255) NOT NULL,
-    CONSTRAINT "tbl_bizniz_rulez_pkey" PRIMARY KEY (id)
+    CONSTRAINT "tbl_bizniz_rulez_pkey" PRIMARY KEY (categorycode)
 );
 
 CREATE VIEW vw_master AS
