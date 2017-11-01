@@ -4,6 +4,7 @@ NO_DUPLICATES_MASTER_FILE='/home/evroon/stack/SEGURA/Rabobank/noDuplicatesMaster
 
 python ${PYTHON_PROCESS_FILES}
 
+# remove quotes from csv file
 awk -F "\",\"" -v OFS='|' -v NFS='\"|\"' -v LEFT_QUOTE='\"|' -v  RIGHT_QUOTE='|\"' '{
 	gsub(/"/, "", $1); \
 	gsub(/"/, "", $5); \
@@ -29,4 +30,3 @@ awk -F "\",\"" -v OFS='|' -v NFS='\"|\"' -v LEFT_QUOTE='\"|' -v  RIGHT_QUOTE='|\
 		$18 OFS \
 		$19 \
 	}' $NO_DUPLICATES_MASTER_FILE > docker/init_config/data/noDuplicatesMasterCsv.csv
-#echo " oi" > docker/init_config/data/noDuplicatesMasterCsv.csv

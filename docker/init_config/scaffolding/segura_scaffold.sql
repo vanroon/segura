@@ -132,7 +132,7 @@ select
     vw_master.id,
     vw_master.categorycode
  FROM vw_master
- WHERE vw_master.selfAccount = 'NL44INGB1234567890';
+ WHERE vw_master.selfAccount = 'placeholder.savingAccountNumber';
 
 CREATE VIEW vw_checking AS
 select
@@ -148,9 +148,23 @@ select
     vw_master.id,
     vw_master.categorycode
  FROM vw_master
- WHERE vw_master.selfAccount = 'NL44RABO1234567890';
+ WHERE vw_master.selfAccount = 'placeholder.checkingAccountNumber';
 
-
+CREATE VIEW vw_orphans AS
+SELECT
+    vw_master.selfAccount,
+    vw_master.currency,
+    vw_master.processDate,
+    vw_master.amount,
+    vw_master.crossAccount,
+    vw_master.crossAccountHolder,
+    vw_master.interestDate,
+    vw_master.type,
+    vw_master.description,
+    vw_master.id,
+    vw_master.categorycode
+FROM vw_master
+WHERE vw_master.categorycode = '000-0'
 
 
  --Example queries

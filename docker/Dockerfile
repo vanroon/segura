@@ -16,3 +16,7 @@ COPY init_config/scaffolding/* /docker-entrypoint-initdb.d/scaffolding/
 
 # Add provision scripts
 COPY init_config/provision/* /docker-entrypoint-initdb.d/provision/
+
+# Make shell file in data folder executable
+#RUN chmod +x /docker-entrypoint-initdb.d/data/substitutePlaceholders.sh
+RUN sh /docker-entrypoint-initdb.d/data/substitutePlaceholders.sh
