@@ -11,6 +11,11 @@ CREATE USER scrooge;
 --CREATE DATABASE SEGURA;
 GRANT ALL PRIVILEGES ON DATABASE segura TO scrooge;
 
+------------
+-- TABLES --
+------------
+
+
 CREATE TABLE public.tbl_master
 (
     id                      serial,
@@ -61,6 +66,29 @@ CREATE TABLE public."tbl_bizniz_rulez"
     CONSTRAINT "tbl_bizniz_rulez_pkey" PRIMARY KEY (categorycode)
 );
 
+--------------------------
+-- FUNCTIONS & TRIGGERS --
+--------------------------
+
+CREATE OR REPLACE FUNCTION get_category_code() RETURNS TRIGGER AS $get_category_code$
+  BEGIN
+    IF substring(NEW.description1 from '^.....') ~ '^[0-9]{3}-[0-9]{1}' THEN
+      INSERT INTO tbl_transaction_category_code_mapping (masterid, categorycode) VALUES (NEW.id, substring(NEW.description1 from '^.....'));
+    ELSE
+      INSERT INTO tbl_transaction_category_code_mapping (masterid, categorycode) VALUES (NEW.id, '000-0');
+    END IF;
+    RETURN NEW;
+  END;
+$get_category_code$ LANGUAGE plpgsql;
+
+CREATE TRIGGER get_category_code
+  AFTER INSERT ON tbl_master
+  FOR EACH ROW
+  EXECUTE PROCEDURE get_category_code();
+
+-----------
+-- VIEWS --
+-----------
 CREATE VIEW vw_master AS
 SELECT
 	tbl_master.selfAccount,
@@ -121,6 +149,8 @@ select
     vw_master.categorycode
  FROM vw_master
  WHERE vw_master.selfAccount = 'NL44RABO1234567890';
+
+
 
 
  --Example queries
