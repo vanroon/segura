@@ -56,6 +56,10 @@ CREATE TABLE public.tbl_transaction_category_code_mapping
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
+CREATE TABLE public.tbl_nieuwe_tabel (
+    id serial
+);
 -- Table: public."tblBiznezRulez"
 
 CREATE TABLE public."tbl_bizniz_rulez"
